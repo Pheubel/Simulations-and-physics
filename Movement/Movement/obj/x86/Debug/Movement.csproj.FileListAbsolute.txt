@@ -1,0 +1,70 @@
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\BlueBallX.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\FlowerMulticolor.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\GreenBallX.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\GreenSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\PinkSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\PurpleSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\RedBallX.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\spr_ball_blue.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\spr_ball_green.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\spr_ball_red.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\spr_spaceship.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\StarLargeMulticolor.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Content\StarSmallMulticolor.xnb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Movement.exe
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\Movement.pdb
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Pheubel\Desktop\New folder\Movement\obj\x86\Debug\Movement.csprojResolveAssemblyReference.cache
+C:\Users\Pheubel\Desktop\New folder\Movement\obj\x86\Debug\Movement.csproj.CoreCompileInputs.cache
+C:\Users\Pheubel\Desktop\New folder\Movement\obj\x86\Debug\Movement.exe
+C:\Users\Pheubel\Desktop\New folder\Movement\obj\x86\Debug\Movement.pdb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\BlueBallX.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\FlowerMulticolor.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\GreenBallX.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\GreenSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\PinkSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\PurpleSoftColorBall.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\RedBallX.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\spr_ball_blue.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\spr_ball_green.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\spr_ball_red.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\spr_spaceship.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\StarLargeMulticolor.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Content\StarSmallMulticolor.xnb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Movement.exe
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\Movement.pdb
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Pheubel\Desktop\movement\Movement\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Pheubel\Desktop\movement\Movement\obj\x86\Debug\Movement.csprojResolveAssemblyReference.cache
+C:\Users\Pheubel\Desktop\movement\Movement\obj\x86\Debug\Movement.csproj.CoreCompileInputs.cache
+C:\Users\Pheubel\Desktop\movement\Movement\obj\x86\Debug\Movement.exe
+C:\Users\Pheubel\Desktop\movement\Movement\obj\x86\Debug\Movement.pdb

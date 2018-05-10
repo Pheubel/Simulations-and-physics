@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/BlueBallX.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/FlowerMulticolor.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/GreenBallX.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/GreenSoftColorBall.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/PinkSoftColorBall.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/PurpleSoftColorBall.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/RedBallX.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/spr_ball_blue.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/spr_ball_green.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/spr_ball_red.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/spr_spaceship.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/StarLargeMulticolor.png</File>
+    <File>C:/Users/Pheubel/Desktop/movement/Movement/Content/StarSmallMulticolor.png</File>
+  </SourceFiles>
+</SourceFileCollection>
