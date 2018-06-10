@@ -7,7 +7,15 @@ using System.Text;
 
 namespace Opdracht6_Transformations
 {
-    public class Sphere
+    public interface ITransformable
+    {
+        Matrix Transform { get; }
+
+        Matrix ApplyTransform(Matrix transformation);
+        Matrix SetTransform(Matrix transformation);
+    }
+
+    public class Sphere : ITransformable
     {
         public struct VertexPositionColorNormal : IVertexType
         {
@@ -34,10 +42,22 @@ namespace Opdracht6_Transformations
         BasicEffect effect;
         GraphicsDevice graphics;
         int numVertices;
-        public Matrix Transform;
         Color color;
 
+        public Matrix Transform { get { return _transform; } private set { _transform = value; } }
+        private Matrix _transform;
+
         public float RotationSpeedAroundPivot { get; private set; }
+
+        public Matrix ApplyTransform(Matrix transformation)
+        {
+            return _transform *= transformation;
+        }
+
+        public Matrix SetTransform(Matrix transformation)
+        {
+            return _transform = transformation;
+        }
 
         public Sphere(Matrix transform,Color color, int numVertices, float rotationSpeedAroundPivot = 0)
         {
@@ -114,5 +134,7 @@ namespace Opdracht6_Transformations
                 graphics.DrawUserIndexedPrimitives<VertexPositionColorNormal>(PrimitiveType.TriangleList, vertices, 0, nvertices, indices, 0, indices.Length / 3);
             }
         }
+
+        
     }
 }
