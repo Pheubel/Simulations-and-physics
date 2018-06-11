@@ -11,7 +11,7 @@ namespace Opdracht6_Transformations
     {
         // bone transformations
         public Matrix LocalTransform { get { return LocalOrientation * AnimationTransform; } }
-        public Matrix WorldTransform { get { return (ParentBone?.WorldTransform ?? Matrix.Identity) * LocalTransform; } }
+        public Matrix WorldTransform { get { return Matrix.CreateTranslation(ParentBone?.WorldTransform.Translation ?? Vector3.Zero) * LocalTransform; } }
         public Matrix AnimationTransform { get; set; } = Matrix.Identity;
 
         public Matrix LocalOrientation
@@ -46,8 +46,7 @@ namespace Opdracht6_Transformations
             LocalTranslation = localTranslation ?? Matrix.Identity;
             LocalRotation = localRotation ?? Matrix.Identity;
             LocalScaling = localScaling ?? Matrix.Identity;
-
-            Rotation = LocalRotation.;
+            
 
             _transformableObject.SetTransform(WorldTransform);
         }

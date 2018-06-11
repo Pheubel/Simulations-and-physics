@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Opdracht4_Collision
+namespace Opdracht6_Transformations.Extensions
 {
     public static class QuanternionExtensions
     {
@@ -75,23 +75,18 @@ namespace Opdracht4_Collision
             return new Vector3((float)roll, (float)pitch, (float)yaw);
         }
 
-        public static Quaternion QuaternionFromMatrix(Matrix m)
-        {
-            
-        }
-
         /// <summary>creates a look rotation quaternion based on direction is looked at</summary>
         /// <param name="forwards">the looking direction</param>
         /// <param name="upwards">defines the "up" direction</param>
         /// <returns>rotation quaternion looking in the given direction</returns>
         /// <remarks>Based on: https://github.com/Unity-Technologies/Unity.Mathematics/blob/5d2fa6687d008f9f538df553d9168bb6873197d7/src/Unity.Mathematics/mathquat.cs#L166 </remarks>
-        public static Quaternion LookRotation(this Quaternion quat,Vector3 forwards,Vector3? upwards = null)
+        public static Quaternion LookRotation(Vector3 forwards, Vector3? upwards = null)
         {
             float[][] matrix3x3 = new float[][] { new float[3], new float[3], new float[3] };
 
             //create the 3x3 matrix values
             Vector3 vectorRow1 = Vector3.Normalize(forwards);
-            Vector3 vectorRow2 = Vector3.Cross(upwards ?? Vector3.Up,vectorRow1);
+            Vector3 vectorRow2 = Vector3.Cross(upwards ?? Vector3.Up, vectorRow1);
             Vector3 vectorRow3 = Vector3.Cross(vectorRow1, vectorRow2);
 
             //fill in the matrix
@@ -107,7 +102,7 @@ namespace Opdracht4_Collision
 
             float diagonalSum = matrix3x3[0][0] + matrix3x3[1][1] + matrix3x3[2][2];
 
-            if(diagonalSum > 0.0)
+            if (diagonalSum > 0.0)
             {
                 //todo: find good names
                 float foo = (float)Math.Sqrt(diagonalSum + 1);
@@ -116,13 +111,13 @@ namespace Opdracht4_Collision
                 return new Quaternion(
                     (matrix3x3[1][2] - matrix3x3[2][1]) * bar,
                     (matrix3x3[2][0] - matrix3x3[0][2]) * bar,
-                    (matrix3x3[0][1]-matrix3x3[1][0]) * bar,
+                    (matrix3x3[0][1] - matrix3x3[1][0]) * bar,
                     foo * 0.5f
                     );
             }
 
             // is 00 the biggest diagonal?
-            if((matrix3x3[0][0] >= matrix3x3[1][1]) && (matrix3x3[0][0] >= matrix3x3[2][2]))
+            if ((matrix3x3[0][0] >= matrix3x3[1][1]) && (matrix3x3[0][0] >= matrix3x3[2][2]))
             {
                 //todo: find good names
                 float foo = (float)Math.Sqrt((1 + matrix3x3[0][0]) - matrix3x3[1][1] - matrix3x3[2][2]);
@@ -132,28 +127,44 @@ namespace Opdracht4_Collision
                     0.5f * foo,
                     (matrix3x3[0][1] + matrix3x3[1][0]) * bar,
                     (matrix3x3[0][2] + matrix3x3[2][0]) * bar,
-                    (matrix3x3[1][2] -matrix3x3[2][1]) *bar
+                    (matrix3x3[1][2] - matrix3x3[2][1]) * bar
                     );
             }
 
             // is 11 or 22 the biggest diagonal?
-            if(matrix3x3[1][1] > matrix3x3[2][2])
+            if (matrix3x3[1][1] > matrix3x3[2][2])
             {
                 float foo = (float)Math.Sqrt((1 + matrix3x3[1][1]) - matrix3x3[0][0] - matrix3x3[2][2]);
                 float bar = 0.5f / foo;
 
                 return new Quaternion(
-                    (matrix3x3[0][0] + matrix3x3[0][0]) * bar;
+                    (matrix3x3[1][0] + matrix3x3[0][1]) * bar,
+                    0.5f * bar,
+                    (matrix3x3[2][1] + matrix3x3[1][2]) * bar,
+                    (matrix3x3[2][0] - matrix3x3[0][2]) * bar
                     );
             }
 
             // 22 is the biggest diagonal
-            return new Quaternion();
+            else
+            {
+                
+                float foo = (float)Math.Sqrt((1 + matrix3x3[2][2]) - matrix3x3[0][0] - matrix3x3[1][1]);
+                float bar = 0.5f / foo;
+
+                return new Quaternion(
+                    (matrix3x3[2][0] + matrix3x3[0][2]) * bar,
+                    (matrix3x3[2][1] + matrix3x3[1][2]) * bar,
+                    0.5f * bar,
+                    (matrix3x3[0][1] - matrix3x3[1][0]) * bar
+                    );
+            }
         }
 
+        /*
         public static Matrix GetRotationMatrix(this Quaternion quat)
         {
             return Matrix.ro
-        }
+        }*/
     }
 }
