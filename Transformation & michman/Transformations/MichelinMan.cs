@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading.Tasks;
 
 namespace Opdracht6_Transformations
 {
@@ -12,8 +13,6 @@ namespace Opdracht6_Transformations
         /// <summary> A collection of bones in the skeleton.</summary>
         public IReadOnlyDictionary<Bones, Bone> Skeleton { get { return _skeleton as IReadOnlyDictionary<Bones, Bone>; } }
         private Dictionary<Bones, Bone> _skeleton;
-
-        public bool IsBlinking { get; set; } = false;
 
         public Bone Origin { get { return b_body1; } }
         public Bone Head { get { return b_headLower; } }
@@ -177,6 +176,8 @@ namespace Opdracht6_Transformations
                 { Bones.RightFootJoint, b_rightFootJoint },
                 { Bones.RightFoot, b_rightFoot}
             };
+
+            Blink();
         }
 
         // defining michelin man
@@ -285,13 +286,44 @@ namespace Opdracht6_Transformations
 
         public void Update()
         {
-            if (IsBlinking)
-                Blink();
+            
         }
 
-        public void Blink()
+        
+        private async Task Blink()
         {
-
+            // delays by 2 to 5 seconds
+            await Task.Delay(RandomHelper.Randomizer.Next(2000,5000));
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f,0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f, 0.1f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0f, 0f, 0f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0f, 0f,0));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
+            await Task.Delay(50);
+            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.5f, 0.5f));
+            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.5f, 0.5f));
+            Blink();
         }
 
         
