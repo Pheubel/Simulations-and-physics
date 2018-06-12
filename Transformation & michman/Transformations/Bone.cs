@@ -9,25 +9,31 @@ namespace Opdracht6_Transformations
 {
     class Bone
     {
+        /*
+         * joint animation transform (A) = (animate within a joint's space)
+         * joint orientation transform (O) = (joint space to parent joint space, in the BIND POSE)
+         * joint local transform (L=O*A) = (Gregory:) joint local pose transform (joint space to parent joint space, in the CURRENT POSE)
+         * joint global transform (G=L*L*L*...) = (Gregory:) joint's current pose (joint space to object space, in the CURRENT POSE)
+         * joint final transform (F=G*B-1) = skinning matrices/transforms (object space to object space -- BIND POSE to CURRENT POSE)
+         * inverse bind pose (B-1=O-1*O-1*O-1*...) (object space to joint space, in the BIND POSE)
+         * joint space = bone space
+         */
+
+        /// <summary> space between parents</summary>
+        public Matrix Orientation { get; private set; } = Matrix.Identity;
+        public Matrix LocalRotation { get; private set; } = Matrix.Identity;
+        public Matrix LocalTransform { get { return LocalRotation * Orientation  ; } }
+        public Matrix WorldTransform { get { return   LocalTransform * (ParentBone?.WorldTransform ?? Matrix.Identity); } }
+
         // bone transformations
-        public Matrix LocalTransform { get { return LocalOrientation * AnimationTransform; } }
-        public Matrix WorldTransform { get { return Matrix.CreateTranslation(ParentBone?.WorldTransform.Translation ?? Vector3.Zero) * LocalTransform; } }
-        public Matrix AnimationTransform { get; set; } = Matrix.Identity;
-
-        public Matrix LocalOrientation
-        {
-            get
-            {
-                return LocalTranslation * LocalRotation * LocalScaling;
-            }
-        }
-
-        public Quaternion Rotation { get; private set; }
-
+        /*
         public Matrix WorldTranslation { get { return (ParentBone?.WorldTranslation ?? Matrix.Identity) * LocalTranslation; } }
+        public Matrix WorldRotation { get { return (ParentBone?.WorldRotation ?? Matrix.Identity) * LocalRotation; } }
 
+        public Matrix AnimationTransform { get; set; } = Matrix.Identity;*/
+        
         public Matrix LocalScaling { get; private set; }
-        public Matrix LocalRotation { get; private set; }
+        
         public Matrix LocalTranslation { get; private set; }
 
         // bone family tree
@@ -35,7 +41,7 @@ namespace Opdracht6_Transformations
         public IReadOnlyList<Bone> ChildBones { get { return _childBones.AsReadOnly(); } }
         private List<Bone> _childBones = new List<Bone>();
 
-        //
+        public ITransformable TransformableObject { get { return _transformableObject; } }
         private ITransformable _transformableObject;
 
         #region Initializations
@@ -43,10 +49,9 @@ namespace Opdracht6_Transformations
         public Bone(ITransformable transformable, Matrix? localTranslation = null, Matrix? localRotation = null, Matrix? localScaling = null)
         {
             _transformableObject = transformable;
-            LocalTranslation = localTranslation ?? Matrix.Identity;
+            Orientation = localTranslation ?? Matrix.Identity;
             LocalRotation = localRotation ?? Matrix.Identity;
             LocalScaling = localScaling ?? Matrix.Identity;
-            
 
             _transformableObject.SetTransform(WorldTransform);
         }
@@ -55,20 +60,31 @@ namespace Opdracht6_Transformations
 
         public void SetLocalTranslation(Matrix translation)
         {
-            LocalTranslation = translation;
+            Orientation = translation;
             BoneUpdated();
         }
 
         public void ApplyLocalTranslation(Matrix translation)
         {
-            LocalTranslation *= translation;
+            Orientation *= translation;
             BoneUpdated();
         }
 
+        public void SetLocalRotation(Matrix rotation)
+        {
+            LocalRotation = rotation;
+            BoneUpdated();
+        }
+
+        public void ApplyLocalRotation(Matrix rotation)
+        {
+            LocalRotation *= rotation;
+            BoneUpdated();
+        }
 
         private void BoneUpdated()
         {
-            _transformableObject.SetTransform(WorldTransform);
+            _transformableObject.SetTransform(LocalScaling* WorldTransform );
             for (int i = 0; i < _childBones.Count; i++)
             {
                 _childBones[i].BoneUpdated();

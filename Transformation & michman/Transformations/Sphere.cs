@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace Opdracht6_Transformations
 
         Matrix ApplyTransform(Matrix transformation);
         Matrix SetTransform(Matrix transformation);
+
+        void Draw();
     }
 
     public class Sphere : ITransformable

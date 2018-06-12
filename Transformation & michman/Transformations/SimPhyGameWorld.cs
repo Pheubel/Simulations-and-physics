@@ -1,4 +1,5 @@
 ﻿//#define usingOldMich
+//#define usingNewOldMich
 
 #region Using Statements
 using System;
@@ -113,6 +114,8 @@ namespace Opdracht6_Transformations
         private Bone b_rightFoot;
         #endregion
         #endregion
+
+        private MichelinMan mich;
 
 
         public SimPhyGameWorld()
@@ -279,33 +282,48 @@ namespace Opdracht6_Transformations
                 Color.White, 30));
 
             #endregion
-#else
+#elif usingNewOldMich
             #region  De Michelin Man
             #region Het lichaam
             body1 = new Sphere(Matrix.Identity, Color.White, 30);
             body2 = new Sphere(Matrix.Identity, Color.White, 30);
             body3 = new Sphere(Matrix.Identity, Color.White, 30);
+            body4 = new Sphere(Matrix.Identity, Color.White, 30);
 
-            //top dog
-            b_body1 = new Bone(body1, Matrix.CreateTranslation(0f, 5f, 0),null, Matrix.CreateScale(1.4f, 1.2f, 1.3f));
-            b_body1.AddNewBone(b_body2 = new Bone(body2, Matrix.CreateTranslation(0f, 3f, 0f),null,Matrix.CreateScale(2f, 1.2f, 1.7f)));
-            b_body2.AddNewBone(b_body3 = new Bone(body3));
+            //bone hierarchy
+            b_body1 = new Bone(body1, Matrix.CreateTranslation(0f, 19f, 0),null, Matrix.CreateScale(2.8f, 2f, 2.8f));
+            b_body1.AddNewBone(b_body2 = new Bone(body2, Matrix.CreateTranslation(0f, 0.8f, 0f),null,Matrix.CreateScale(3.2f, 1.5f, 3.2f)));
+            b_body2.AddNewBone(b_body3 = new Bone(body3, Matrix.CreateTranslation(0,1,0), null, Matrix.CreateScale(3.2f, 1.5f, 3.2f)));
+            b_body3.AddNewBone(b_body4 = new Bone(body4, Matrix.CreateTranslation(0,0.8f,0), null, Matrix.CreateScale(2.8f, 2f, 2.8f)));
+
+            spheres.Add(body1);
+            spheres.Add(body2);
+            spheres.Add(body3);
+            spheres.Add(body4);
             #endregion
 
+            #region Het hoofd
+            neck = new Sphere(Matrix.Identity, Color.White, 30);
+            headLower = new Sphere(Matrix.Identity, Color.White, 30);
+            headUpper = new Sphere(Matrix.Identity, Color.White, 30);
+
+            // Head bone hierarchy
+            b_body4.AddNewBone(b_neck = new Bone(neck,Matrix.CreateTranslation(0,2,0),null,Matrix.CreateScale(0.8f,1,0.8f)));
+            b_neck.AddNewBone(b_headLower = new Bone(headLower,Matrix.CreateTranslation(0,1.5f,0),null,Matrix.CreateScale(1.8f,1.1f,1.8f)));
+            b_headLower.AddNewBone(b_headUpper = new Bone(headUpper, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(1.4f, 1.3f, 1.4f)));
+
             // Nek en het hoofd
-            spheres.Add(neck = new Sphere(Matrix.CreateScale(1.4f, 1.2f, 1.3f) * Matrix.CreateTranslation(0f, 24f, 0f), Color.White, 30));
-            spheres.Add(headLower = new Sphere(Matrix.CreateScale(2f, 1.2f, 1.7f) * Matrix.CreateTranslation(0f, 25f, 0f), Color.White, 30));
-            spheres.Add(headUpper = new Sphere(Matrix.CreateScale(1.4f, 1.4f, 1.4f) * Matrix.CreateTranslation(0f, 25.8f, 0f), Color.White, 30));
+            spheres.Add(neck);
+            spheres.Add(headLower);
+            spheres.Add(headUpper);
 
             // Ogen
             spheres.Add(leftEye = new Sphere(Matrix.CreateScale(0.3f, 0.3f, 0.5f) * Matrix.CreateTranslation(-0.5f, 26f, 1.3f), Color.Black, 30));
             spheres.Add(rightEye = new Sphere(Matrix.CreateScale(0.3f, 0.3f, 0.5f) * Matrix.CreateTranslation(0.5f, 26f, 1.3f), Color.Black, 30));
 
+            #endregion
             // Het lichaam
-            spheres.Add(body1);
-            spheres.Add(body2);
-            spheres.Add(body3);
-            spheres.Add(body4 = new Sphere(Matrix.CreateScale(2.7f, 1.3f, 2.4f) * Matrix.CreateTranslation(0f, 22.8f, 0f), Color.White, 30));
+
 
             // De armen
 
@@ -406,6 +424,12 @@ namespace Opdracht6_Transformations
                 Color.White, 30));
 
             #endregion
+
+#else
+            mich = new MichelinMan();
+            mich.Origin.SetLocalTranslation(Matrix.CreateTranslation(0, 10, 0));
+
+            //mich.Origin.SetLocalTranslation(Matrix.CreateTranslation(0, 19f, 0));
 #endif
 
             base.Initialize();
@@ -438,6 +462,8 @@ namespace Opdracht6_Transformations
                 sphere.Draw();
             }
 
+            mich.Draw();
+
             base.Draw(gameTime);
         }
 
@@ -445,10 +471,9 @@ namespace Opdracht6_Transformations
 
         protected override void Update(GameTime gameTime)
         {
-            b_body1.SetLocalTranslation(Matrix.CreateTranslation(0, i-- * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
-
-            Debug.WriteLine($"b_body1 local pos: \n{{{b_body1.LocalTranslation.Translation}}}\n\nworld pos:\n{{{b_body1.WorldTransform.Translation}}}\n\n");
-            Debug.WriteLine($"b_body2 local pos: \n{{{b_body2.LocalTranslation.Translation}}}\n\nworld pos:\n{{{b_body2.WorldTransform.Translation}}}\n\n\n");
+            mich.Origin.ApplyLocalRotation(Matrix.CreateRotationX((float)gameTime.TotalGameTime.Seconds));
+            mich.Origin.SetLocalTranslation(Matrix.CreateTranslation(0,(float)gameTime.TotalGameTime.Seconds,0));
+            
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
