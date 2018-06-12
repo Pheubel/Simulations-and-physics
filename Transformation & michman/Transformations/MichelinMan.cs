@@ -9,17 +9,30 @@ namespace Opdracht6_Transformations
 {
     class MichelinMan
     {
+        /// <summary> A collection of bones in the skeleton.</summary>
         public IReadOnlyDictionary<Bones, Bone> Skeleton { get { return _skeleton as IReadOnlyDictionary<Bones, Bone>; } }
         private Dictionary<Bones, Bone> _skeleton;
 
+        public bool IsBlinking { get; set; } = false;
+
         public Bone Origin { get { return b_body1; } }
-        public Bone LeftLeg { get { return b_legLeftUpper; } }
-        public Bone RightLeg { get { return b_legRightUpper; } }
-        public Bone LeftArm { get { return b_armLeftUpper; } }
-        public Bone RightArm { get { return b_armRightUpper; } }
         public Bone Head { get { return b_headLower; } }
+        public Bone LeftLeg { get { return b_leftLeg; } }
+        public Bone LeftKnee { get { return b_legLeftKnee; } }
+        public Bone LeftAnkle { get { return b_leftFootJoint; } }
+        public Bone RightLeg { get { return b_rightLeg; } }
+        public Bone RightKnee { get { return b_legRightKnee; } }
+        public Bone RightAnkle { get { return b_rightFootJoint; } }
+        public Bone LeftArm { get { return b_leftArm; } }
+        public Bone LeftElbow { get { return b_armLeftElbow; } }
+        public Bone LeftHand { get { return b_leftHandJoint; } }
+        public Bone RightArm { get { return b_rightArm; } }
+        public Bone RightElbow { get { return b_armRightElbow; } }
+        public Bone RightHandJoint { get { return b_rightHandJoint; } }
+        
+        
 
-
+        /// <summary> Initializes the Michelin man standing in a T-pose.</summary>
         public MichelinMan()
         {
             #region Het lichaam
@@ -29,10 +42,10 @@ namespace Opdracht6_Transformations
             body4 = new Sphere(Matrix.Identity, Color.White, 30);
 
             //bone hierarchy
-            b_body1 = new Bone(body1, Matrix.CreateTranslation(0f, 0, 0), null, Matrix.CreateScale(2.8f, 2f, 2.6f));
-            b_body1.AddNewBone(b_body2 = new Bone(body2, Matrix.CreateTranslation(0f, 0.8f, 0f), null, Matrix.CreateScale(3.2f, 1.5f, 3.2f)));
-            b_body2.AddNewBone(b_body3 = new Bone(body3, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(3.2f, 1.5f, 3.2f)));
-            b_body3.AddNewBone(b_body4 = new Bone(body4, Matrix.CreateTranslation(0, 0.8f, 0), null, Matrix.CreateScale(2.8f, 2f, 2.6f)));
+            b_body1 = new Bone(body1, Matrix.CreateTranslation(0f, 0, 0), null, Matrix.CreateScale(2.8f, 2f, 2f));
+            b_body2 = b_body1.AddNewBone(body2, Matrix.CreateTranslation(0f, 0.8f, 0f), null, Matrix.CreateScale(3.2f, 1.5f, 2.8f));
+            b_body3 = b_body2.AddNewBone(body3, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(3.2f, 1.5f, 2.8f));
+            b_body4 = b_body3.AddNewBone(body4, Matrix.CreateTranslation(0, 0.8f, 0), null, Matrix.CreateScale(2.8f, 2f, 2.2f));
             #endregion
 
             #region Het hoofd
@@ -44,29 +57,86 @@ namespace Opdracht6_Transformations
             rightEye = new Sphere(Matrix.Identity, Color.Black, 30);
 
             // Head bone hierarchy
-            b_body4.AddNewBone(b_neck = new Bone(neck, Matrix.CreateTranslation(0, 2, 0), null, Matrix.CreateScale(0.8f, 1, 0.8f)));
-            b_neck.AddNewBone(b_headLower = new Bone(headLower, Matrix.CreateTranslation(0, 1.5f, 0), null, Matrix.CreateScale(1.8f, 1.1f, 1.8f)));
-            b_headLower.AddNewBone(b_headUpper = new Bone(headUpper, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(1.4f, 1.3f, 1.4f)));
-
-            //eye hierarchy
-            b_headUpper.AddNewBone(b_leftEye = new Bone(leftEye));
-            b_headUpper.AddNewBone(b_rightEye = new Bone(rightEye));
+            b_neck = b_body4.AddNewBone(neck, Matrix.CreateTranslation(0, 2, 0), null, Matrix.CreateScale(0.8f, 1, 0.8f));
+            b_headLower = b_neck.AddNewBone(headLower, Matrix.CreateTranslation(0, 1.5f, 0), null, Matrix.CreateScale(1.8f, 1.1f, 1.8f));
+            b_headUpper = b_headLower.AddNewBone(headUpper, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(1.4f, 1.3f, 1.4f));
+            b_leftEye = b_headUpper.AddNewBone(rightEye, Matrix.CreateTranslation(0.8f, 0, 1.7f),null,Matrix.CreateScale(0.5f,0.5f,0.5f));
+            b_rightEye = b_headUpper.AddNewBone(leftEye, Matrix.CreateTranslation(-0.8f, 0, 1.7f),null, Matrix.CreateScale(0.5f, 0.5f, 0.5f));
             #endregion
 
             #region Linker Arm
+            leftArm = new BoneJoint();
+            leftHandJoint = new BoneJoint();
+
+            armLeftUpper = new Sphere(Matrix.Identity, Color.White, 30);
+            armLeftElbow = new Sphere(Matrix.Identity, Color.White, 30);
+            armLeftLower = new Sphere(Matrix.Identity, Color.White, 30);
+            leftHand = new Sphere(Matrix.Identity, Color.White, 30);
+
+            b_leftArm = b_body4.AddNewBone(leftArm, Matrix.CreateTranslation(2.5f, 0.5f, 0));
+
+            b_armLeftUpper = b_leftArm.AddNewBone(armLeftUpper, Matrix.CreateTranslation(1, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_armLeftElbow = b_armLeftUpper.AddNewBone(armLeftElbow, Matrix.CreateTranslation(2, 0, 0), null, Matrix.CreateScale(1, 1, 1));
+            b_armLeftLower = b_armLeftElbow.AddNewBone(armLeftLower, Matrix.CreateTranslation(2, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_leftHandJoint = b_armLeftLower.AddNewBone(leftHandJoint, Matrix.CreateTranslation(2.2f, 0, 0));
+            b_leftHand = b_leftHandJoint.AddNewBone(leftHand, Matrix.CreateTranslation(0.6f, 0, 0), null, Matrix.CreateScale(1, 0.8f, 0.6f));
 
             #endregion
 
             #region Rechter Arm
+            rightArm = new BoneJoint();
+            rightHandJoint = new BoneJoint();
+
+            armRightUpper = new Sphere(Matrix.Identity, Color.White, 30);
+            armRightElbow = new Sphere(Matrix.Identity, Color.White, 30);
+            armRightLower = new Sphere(Matrix.Identity, Color.White, 30);
+            rightHand = new Sphere(Matrix.Identity, Color.White, 30);
+
+            b_rightArm = b_body4.AddNewBone(rightArm, Matrix.CreateTranslation(-2.5f, 0.5f, 0));
+
+            b_armRightUpper = b_rightArm.AddNewBone(armRightUpper, Matrix.CreateTranslation(-1, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_armRightElbow = b_armRightUpper.AddNewBone(armRightElbow, Matrix.CreateTranslation(-2, 0, 0), null, Matrix.CreateScale(1, 1, 1));
+            b_armRightLower = b_armRightElbow.AddNewBone(armRightLower, Matrix.CreateTranslation(-2, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_rightHandJoint = b_armRightLower.AddNewBone(rightHandJoint, Matrix.CreateTranslation(-2.2f, 0, 0));
+            b_rightHand = b_rightHandJoint.AddNewBone(rightHand, Matrix.CreateTranslation(-0.6f, 0, 0), null, Matrix.CreateScale(1, 0.8f, 0.6f));
 
             #endregion
 
             #region Linker Been
+            leftLeg = new BoneJoint();
+            leftFootJoint = new BoneJoint();
 
+            legLeftUpper = new Sphere(Matrix.Identity, Color.White, 30);
+            legLeftKnee = new Sphere(Matrix.Identity, Color.White, 30);
+            legLeftLower = new Sphere(Matrix.Identity, Color.White, 30);
+            leftFoot = new Sphere(Matrix.Identity, Color.White, 30);
+
+            b_leftLeg = b_body1.AddNewBone(leftLeg, Matrix.CreateTranslation(1.8f, -1.4f, 0));
+
+            b_legLeftUpper = b_leftLeg.AddNewBone(legLeftUpper,Matrix.CreateTranslation(0,-2,0),null,Matrix.CreateScale(1.2f,2.5f,1.4f));
+            b_legLeftKnee = b_legLeftUpper.AddNewBone(legLeftKnee, Matrix.CreateTranslation(0,-2,0),null, Matrix.CreateScale(1.2f,1.2f,1.2f));
+            b_legLeftLower = b_legLeftKnee.AddNewBone(legLeftLower, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 2.5f, 1.4f));
+            b_leftFootJoint = b_legLeftLower.AddNewBone(leftFootJoint, Matrix.CreateTranslation(0, -2, 0));
+            b_leftFoot = b_leftFootJoint.AddNewBone(leftFoot, Matrix.CreateTranslation(0, 0, 1), null,Matrix.CreateScale(1,0.7f,2));
             #endregion
 
             #region Rechter Been
+            rightLeg = new BoneJoint();
+            rightFootJoint = new BoneJoint();
 
+            legRightUpper = new Sphere(Matrix.Identity, Color.White, 30);
+            legRightKnee = new Sphere(Matrix.Identity, Color.White, 30);
+            legRightLower = new Sphere(Matrix.Identity, Color.White, 30);
+            rightFoot = new Sphere(Matrix.Identity, Color.White, 30);
+
+
+            b_rightLeg = b_body1.AddNewBone(rightLeg, Matrix.CreateTranslation(-1.8f, -1.4f, 0));
+
+            b_legRightUpper = b_rightLeg.AddNewBone(legRightUpper, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 2.5f, 1.4f));
+            b_legRightKnee = b_legRightUpper.AddNewBone(legRightKnee, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 1.2f, 1.2f));
+            b_legRightLower = b_legRightKnee.AddNewBone(legRightLower, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 2.5f, 1.4f));
+            b_rightFootJoint = b_legRightLower.AddNewBone(rightFootJoint, Matrix.CreateTranslation(0, -2, 0));
+            b_rightFoot = b_rightFootJoint.AddNewBone(rightFoot, Matrix.CreateTranslation(0, 0, 1), null, Matrix.CreateScale(1, 0.7f, 2));
             #endregion
 
 
@@ -82,25 +152,34 @@ namespace Opdracht6_Transformations
                 { Bones.HeadUpper, b_headUpper},
                 { Bones.LeftEye, b_leftEye},
                 { Bones.RightEye, b_rightEye},
+                { Bones.LeftArm, b_leftArm},
                 { Bones.LeftArmUpper,b_armLeftUpper },
                 { Bones.LeftElbow, b_armLeftElbow},
                 { Bones.LeftArmLower, b_armLeftLower},
+                { Bones.LeftHandJoint, b_leftHandJoint },
                 { Bones.LeftHand, b_leftHand},
+                { Bones.RightArm,b_rightArm },
                 { Bones.RightArmUpper, b_armRightUpper},
                 { Bones.RightElbow, b_armRightElbow},
                 { Bones.RightElbowLower, b_armRightLower},
+                { Bones.RightHandJoint, b_rightHandJoint },
                 { Bones.RightHand, b_rightHand},
+                { Bones.LeftLeg, b_leftLeg },
                 { Bones.LeftLegUpper, b_legLeftLower},
                 { Bones.LeftKnee, b_legLeftKnee},
                 { Bones.LeftLegLower, b_legLeftUpper},
+                { Bones.LeftFootJoint, b_leftFootJoint },
                 { Bones.LeftFoot, b_leftFoot},
+                { Bones.RightLeg, b_rightLeg },
                 { Bones.RightLegUpper, b_legRightUpper},
                 { Bones.RightKnee, b_legRightKnee},
                 { Bones.RightLegLower, b_legRightLower},
+                { Bones.RightFootJoint, b_rightFootJoint },
                 { Bones.RightFoot, b_rightFoot}
             };
         }
 
+        // defining michelin man
         #region De Michelin Man
 
         #region Hoofd
@@ -134,7 +213,8 @@ namespace Opdracht6_Transformations
         #endregion
 
         #region Armen
-
+        private BoneJoint leftArm, rightArm;
+        private BoneJoint leftHandJoint, rightHandJoint;
 
         private Sphere armLeftUpper, armRightUpper;
         private Sphere armLeftElbow, armRightElbow;
@@ -142,6 +222,9 @@ namespace Opdracht6_Transformations
         private Sphere leftHand, rightHand;
 
         //bones
+        private Bone b_leftArm, b_rightArm;
+        private Bone b_leftHandJoint, b_rightHandJoint;
+
         private Bone b_armLeftUpper, b_armRightUpper;
         private Bone b_armLeftElbow, b_armRightElbow;
         private Bone b_armLeftLower, b_armRightLower;
@@ -149,10 +232,16 @@ namespace Opdracht6_Transformations
         #endregion
 
         #region Benen
+        private BoneJoint leftLeg;
+        private BoneJoint leftFootJoint, rightFootJoint;
+
         private Sphere legLeftUpper;
         private Sphere legLeftKnee;
         private Sphere legLeftLower;
         private Sphere leftFoot;
+
+
+        private BoneJoint rightLeg;
 
         private Sphere legRightUpper;
         private Sphere legRightKnee;
@@ -160,10 +249,17 @@ namespace Opdracht6_Transformations
         private Sphere rightFoot;
 
         //bones
+        private Bone b_leftFootJoint, b_rightFootJoint;
+
+        private Bone b_leftLeg;
+
         private Bone b_legLeftUpper;
         private Bone b_legLeftKnee;
         private Bone b_legLeftLower;
         private Bone b_leftFoot;
+
+
+        private Bone b_rightLeg;
 
         private Bone b_legRightUpper;
         private Bone b_legRightKnee;
@@ -189,9 +285,16 @@ namespace Opdracht6_Transformations
 
         public void Update()
         {
+            if (IsBlinking)
+                Blink();
+        }
+
+        public void Blink()
+        {
 
         }
 
+        
         public enum Bones
         {
             Body1,
@@ -207,22 +310,27 @@ namespace Opdracht6_Transformations
             LeftArmUpper,
             LeftElbow,
             LeftArmLower,
+            LeftHandJoint,
             LeftHand,
             RightArm,
             RightArmUpper,
             RightElbow,
             RightElbowLower,
+            RightHandJoint,
             RightHand,
             LeftLeg,
             LeftLegUpper,
             LeftKnee,
             LeftLegLower,
+            LeftFootJoint,
             LeftFoot,
             RightLeg,
             RightLegUpper,
             RightKnee,
             RightLegLower,
+            RightFootJoint,
             RightFoot
         }
     }
 }
+

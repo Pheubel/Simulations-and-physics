@@ -36,15 +36,15 @@ namespace Opdracht6_Transformations
         /// <summary> The local rotation of the bone.</summary>
         public Matrix LocalRotation { get; private set; } = Matrix.Identity;
         /// <summary> The local transform as result of the orientation and the rotation.</summary>
-        public Matrix LocalTransform { get { return LocalRotation * Orientation  ; } }
+        public Matrix LocalTransform { get { return LocalRotation * Orientation; } }
         /// <summary> The transform of the bone in world space.</summary>
-        public Matrix WorldTransform { get { return   LocalTransform * (ParentBone?.WorldTransform ?? Matrix.Identity); } }
-        
+        public Matrix WorldTransform { get { return LocalTransform * (ParentBone?.WorldTransform ?? Matrix.Identity); } }
+
         /// <summary> The scaling which the bone will undergo through, does not affect other transformations.</summary>
         public Matrix LocalScaling { get; private set; }
 
         // bone family tree
-        /// <summary> THe parent bone of the current bone.</summary>
+        /// <summary> The parent bone of the current bone.</summary>
         public Bone ParentBone { get; private set; }
         /// <summary> The collection of child bones attached to the current bone.</summary>
         public IReadOnlyList<Bone> ChildBones { get { return _childBones.AsReadOnly(); } }
@@ -97,6 +97,8 @@ namespace Opdracht6_Transformations
             BoneUpdated();
         }
 
+        /// <summary> Adds the local rotation matrix to the bone's current rotation matrix.</summary>
+        /// <param name="rotation"> Matrix containing the rotation.</param>
         public void ApplyLocalRotation(Matrix rotation)
         {
             LocalRotation *= rotation;
@@ -119,7 +121,7 @@ namespace Opdracht6_Transformations
         /// <summary> Applies the updated transformation to the bone and signals to the children to update.</summary>
         private void BoneUpdated()
         {
-            _transformableObject.SetTransform(LocalScaling* WorldTransform );
+            _transformableObject.SetTransform(LocalScaling * WorldTransform);
             for (int i = 0; i < _childBones.Count; i++)
             {
                 _childBones[i].BoneUpdated();
@@ -141,35 +143,57 @@ namespace Opdracht6_Transformations
         }
 
         #region Skeleton structure mutation
-
-        public void AddNewBone(Bone newBone)
+        
+        /// <summary> Creates a new bone and adds it to the calling bone's children.</summary>
+        /// <param name="transformable"> The transformable the bone is going to be attached to.</param>
+        /// <param name="localTranslation"> The local translation the bone will have.</param>
+        /// <param name="localRotation"> The local rotation the bone will have.</param>
+        /// <param name="localScaling"> The local scaling the bone will have.</param>
+        /// <returns> New bone.</returns>
+        public Bone AddNewBone(ITransformable transformable, Matrix? localTranslation = null, Matrix? localRotation = null, Matrix? localScaling = null)
         {
+            Bone newBone = new Bone(transformable,localTranslation,localRotation,localScaling);
+
+            this._childBones.Add(newBone);
             newBone.ParentBone = this;
-            newBone.BoneUpdated();
-            _childBones.Add(newBone);
+            return newBone;
         }
 
-        public void AddNewBones(ICollection<Bone> newBones)
+        /// <summary> Adds a collection of bones to the calling bone's children.</summary>
+        /// <param name="newBones"></param>
+        public ICollection<Bone> AddNewBones(ICollection<ITransformable> transformables)
         {
-            _childBones.AddRange(newBones);
-            foreach (Bone newBone in newBones)
+            Bone[] newBones = new Bone[transformables.Count];
+
+            int i = 0;
+            foreach (ITransformable transformable in transformables)
             {
-                newBone.ParentBone = this;
-                newBone.BoneUpdated();
+                newBones[i] = new Bone(transformable) { ParentBone = this };
+                i++;
             }
+
+            _childBones.AddRange(newBones);
+
+            return newBones;
         }
 
+        /// <summary> Adds a bone to the calling bone's children.</summary>
+        /// <param name="bone"> new child bone.</param>
         public void AttachBone(Bone bone)
         {
-            this._childBones.Add(bone);
             bone.ParentBone = this;
+            bone.BoneUpdated();
+            _childBones.Add(bone);
         }
 
         public void AttachBones(ICollection<Bone> bones)
         {
-            this._childBones.AddRange(bones);
-            foreach (Bone bone in bones)
-                bone.ParentBone = this;
+            _childBones.AddRange(bones);
+            foreach (Bone newBone in bones)
+            {
+                newBone.ParentBone = this;
+                newBone.BoneUpdated();
+            }
         }
 
         public void DetachBone(Bone bone)
