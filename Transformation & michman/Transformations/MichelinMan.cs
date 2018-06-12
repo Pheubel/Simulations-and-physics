@@ -74,7 +74,7 @@ namespace Opdracht6_Transformations
 
             b_leftArm = b_body4.AddNewBone(leftArm, Matrix.CreateTranslation(2.5f, 0.5f, 0));
 
-            b_armLeftUpper = b_leftArm.AddNewBone(armLeftUpper, Matrix.CreateTranslation(1, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_armLeftUpper = b_leftArm.AddNewBone(armLeftUpper, Matrix.CreateTranslation(1.2f, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
             b_armLeftElbow = b_armLeftUpper.AddNewBone(armLeftElbow, Matrix.CreateTranslation(2, 0, 0), null, Matrix.CreateScale(1, 1, 1));
             b_armLeftLower = b_armLeftElbow.AddNewBone(armLeftLower, Matrix.CreateTranslation(2, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
             b_leftHandJoint = b_armLeftLower.AddNewBone(leftHandJoint, Matrix.CreateTranslation(2.2f, 0, 0));
@@ -93,7 +93,7 @@ namespace Opdracht6_Transformations
 
             b_rightArm = b_body4.AddNewBone(rightArm, Matrix.CreateTranslation(-2.5f, 0.5f, 0));
 
-            b_armRightUpper = b_rightArm.AddNewBone(armRightUpper, Matrix.CreateTranslation(-1, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
+            b_armRightUpper = b_rightArm.AddNewBone(armRightUpper, Matrix.CreateTranslation(-2f, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
             b_armRightElbow = b_armRightUpper.AddNewBone(armRightElbow, Matrix.CreateTranslation(-2, 0, 0), null, Matrix.CreateScale(1, 1, 1));
             b_armRightLower = b_armRightElbow.AddNewBone(armRightLower, Matrix.CreateTranslation(-2, 0, 0), null, Matrix.CreateScale(2.5f, 1, 1));
             b_rightHandJoint = b_armRightLower.AddNewBone(rightHandJoint, Matrix.CreateTranslation(-2.2f, 0, 0));
@@ -289,7 +289,7 @@ namespace Opdracht6_Transformations
             
         }
 
-        
+        /// <summary> Makes the michelin man blink every 2 to 5 seconds.</summary>
         private async Task Blink()
         {
             // delays by 2 to 5 seconds
