@@ -176,24 +176,14 @@ namespace Opdracht6_Transformations
         {
             foreach (Bone bone in _skeleton.Values)
             {
+                //protects the draw from stopping due to a undefined bone
                 if (bone == null) continue;
-                bone.TransformableObject.Draw();
 
-                if (bone != Origin) continue;
+                // casts the bone as an interface implementation that can draw the current object
+                var drawableObject = bone.TransformableObject as IDrawableTransformable;
+                if (drawableObject == null) continue;
 
-                Console.WriteLine($"wpos: {bone.WorldTransform.Translation}");
-                Console.WriteLine($"lpos: {bone.LocalTransform.Translation}");
-                Console.WriteLine();
-
-                if(bone.WorldTransform.Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation))
-                {
-                    Console.WriteLine($"{{World transform}}\nscale: {scale}\nrotation: {rotation}\ntranslation: {translation}\n\n");
-                }
-
-                if (bone.LocalTransform.Decompose(out Vector3 lscale, out Quaternion lrotation, out Vector3 ltranslation))
-                {
-                    Console.WriteLine($"{{Local transform}}\nscale: {lscale}\nrotation: {lrotation}\ntranslation: {ltranslation}\n\n\n");
-                }
+                drawableObject.Draw();
             }
         }
 
@@ -213,18 +203,22 @@ namespace Opdracht6_Transformations
             HeadUpper,
             LeftEye,
             RightEye,
+            LeftArm,
             LeftArmUpper,
             LeftElbow,
             LeftArmLower,
             LeftHand,
+            RightArm,
             RightArmUpper,
             RightElbow,
             RightElbowLower,
             RightHand,
+            LeftLeg,
             LeftLegUpper,
             LeftKnee,
             LeftLegLower,
             LeftFoot,
+            RightLeg,
             RightLegUpper,
             RightKnee,
             RightLegLower,

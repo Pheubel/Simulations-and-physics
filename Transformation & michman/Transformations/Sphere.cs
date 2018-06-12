@@ -14,11 +14,16 @@ namespace Opdracht6_Transformations
 
         Matrix ApplyTransform(Matrix transformation);
         Matrix SetTransform(Matrix transformation);
+    }
 
+    public interface IDrawable
+    {
         void Draw();
     }
 
-    public class Sphere : ITransformable
+    public interface IDrawableTransformable : ITransformable, IDrawable { }
+
+    public class Sphere : IDrawableTransformable
     {
         public struct VertexPositionColorNormal : IVertexType
         {
