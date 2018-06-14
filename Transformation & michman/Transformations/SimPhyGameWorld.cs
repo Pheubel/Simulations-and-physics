@@ -216,12 +216,8 @@ namespace Opdracht6_Transformations
 
         protected override void Update(GameTime gameTime)
         {
-            //mich.Origin.ApplyLocalRotation(Matrix.CreateRotationX((float)gameTime.TotalGameTime.Seconds));
-            //mich.Origin.SetLocalTranslation(Matrix.CreateTranslation(0,(float)gameTime.TotalGameTime.Seconds,0));
-            Console.WriteLine("{" + mich.Skeleton[MichelinMan.Bones.LeftEye].LocalTransform.Translation + "}");
-            //mich.LeftArm.ApplyLocalTranslation(Matrix.CreateTranslation((float)gameTime.ElapsedGameTime.TotalSeconds/10, 0, 0));
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 // Step 10: Make the camera position rotate around the origin depending on gameTime.ElapsedGameTime.TotalSeconds
                 cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationY((float)gameTime.ElapsedGameTime.TotalSeconds * 1.3f));
@@ -229,7 +225,7 @@ namespace Opdracht6_Transformations
 
                 SetupCamera();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 // Step 10: Make the camera position rotate around the origin depending on gameTime.ElapsedGameTime.TotalSeconds
                 cameraPosition = Vector3.Transform(cameraPosition, Matrix.CreateRotationY((float)gameTime.ElapsedGameTime.TotalSeconds * -1.3f));
@@ -259,6 +255,7 @@ namespace Opdracht6_Transformations
             
             mich.RightArm.SetLocalRotation(Matrix.CreateFromYawPitchRoll(0, (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds), MathHelper.ToRadians(60)));
             mich.RightElbow.SetLocalRotation(Matrix.CreateFromYawPitchRoll((MathHelper.ToRadians(45) - (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds) / 2), (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds) / 4,0));
+            
 
             mich.LeftLeg.SetLocalRotation(Matrix.CreateRotationX((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));
             mich.RightLeg.SetLocalRotation(Matrix.CreateRotationX(-(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));

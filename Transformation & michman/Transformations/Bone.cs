@@ -59,7 +59,7 @@ namespace Opdracht6_Transformations
         /// <param name="transformable"> Object to allow transformation.</param>
         /// <param name="localTranslation"> Starting translation from the parent.</param>
         /// <param name="localRotation"> Starting rotation from the parent.</param>
-        /// <param name="localScaling"> SScaling of the object.</param>
+        /// <param name="localScaling"> Scaling of the object.</param>
         public Bone(ITransformable transformable, Matrix? localTranslation = null, Matrix? localRotation = null, Matrix? localScaling = null)
         {
             _transformableObject = transformable;

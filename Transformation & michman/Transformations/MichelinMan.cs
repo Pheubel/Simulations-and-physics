@@ -14,7 +14,8 @@ namespace Opdracht6_Transformations
         public IReadOnlyDictionary<Bones, Bone> Skeleton { get { return _skeleton as IReadOnlyDictionary<Bones, Bone>; } }
         private Dictionary<Bones, Bone> _skeleton;
 
-        public Bone Origin { get { return b_body1; } }
+        public Bone Origin { get { return b_origin; } }
+        public Bone LowerBody { get { return b_body1; } }
         public Bone Head { get { return b_headLower; } }
         public Bone LeftLeg { get { return b_leftLeg; } }
         public Bone LeftKnee { get { return b_legLeftKnee; } }
@@ -34,6 +35,10 @@ namespace Opdracht6_Transformations
         /// <summary> Initializes the Michelin man standing in a T-pose.</summary>
         public MichelinMan()
         {
+            origin = new BoneJoint();
+            b_origin = new Bone(origin);
+
+
             #region Het lichaam
             body1 = new Sphere(Matrix.Identity, Color.White, 30);
             body2 = new Sphere(Matrix.Identity, Color.White, 30);
@@ -41,7 +46,7 @@ namespace Opdracht6_Transformations
             body4 = new Sphere(Matrix.Identity, Color.White, 30);
 
             //bone hierarchy
-            b_body1 = new Bone(body1, Matrix.CreateTranslation(0f, 0, 0), null, Matrix.CreateScale(2.8f, 2f, 2f));
+            b_body1 = b_origin.AddNewBone(body1, Matrix.CreateTranslation(0f, 0, 0), null, Matrix.CreateScale(2.8f, 2f, 2f));
             b_body2 = b_body1.AddNewBone(body2, Matrix.CreateTranslation(0f, 0.8f, 0f), null, Matrix.CreateScale(3.2f, 1.5f, 2.8f));
             b_body3 = b_body2.AddNewBone(body3, Matrix.CreateTranslation(0, 1, 0), null, Matrix.CreateScale(3.2f, 1.5f, 2.8f));
             b_body4 = b_body3.AddNewBone(body4, Matrix.CreateTranslation(0, 0.8f, 0), null, Matrix.CreateScale(2.8f, 2f, 2.2f));
@@ -110,7 +115,7 @@ namespace Opdracht6_Transformations
             legLeftLower = new Sphere(Matrix.Identity, Color.White, 30);
             leftFoot = new Sphere(Matrix.Identity, Color.White, 30);
 
-            b_leftLeg = b_body1.AddNewBone(leftLeg, Matrix.CreateTranslation(1.8f, -1.4f, 0));
+            b_leftLeg = b_origin.AddNewBone(leftLeg, Matrix.CreateTranslation(1.8f, -1.4f, 0));
 
             b_legLeftUpper = b_leftLeg.AddNewBone(legLeftUpper,Matrix.CreateTranslation(0,-2,0),null,Matrix.CreateScale(1.2f,2.5f,1.4f));
             b_legLeftKnee = b_legLeftUpper.AddNewBone(legLeftKnee, Matrix.CreateTranslation(0,-2,0),null, Matrix.CreateScale(1.2f,1.2f,1.2f));
@@ -129,7 +134,7 @@ namespace Opdracht6_Transformations
             rightFoot = new Sphere(Matrix.Identity, Color.White, 30);
 
 
-            b_rightLeg = b_body1.AddNewBone(rightLeg, Matrix.CreateTranslation(-1.8f, -1.4f, 0));
+            b_rightLeg = b_origin.AddNewBone(rightLeg, Matrix.CreateTranslation(-1.8f, -1.4f, 0));
 
             b_legRightUpper = b_rightLeg.AddNewBone(legRightUpper, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 2.5f, 1.4f));
             b_legRightKnee = b_legRightUpper.AddNewBone(legRightKnee, Matrix.CreateTranslation(0, -2, 0), null, Matrix.CreateScale(1.2f, 1.2f, 1.2f));
@@ -182,6 +187,9 @@ namespace Opdracht6_Transformations
 
         // defining michelin man
         #region De Michelin Man
+
+        BoneJoint origin;
+        Bone b_origin;
 
         #region Hoofd
         private Sphere neck;
@@ -282,11 +290,6 @@ namespace Opdracht6_Transformations
 
                 drawableObject.Draw();
             }
-        }
-
-        public void Update()
-        {
-            
         }
 
         /// <summary> Makes the michelin man blink every 2 to 5 seconds.</summary>
