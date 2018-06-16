@@ -297,38 +297,44 @@ namespace Opdracht6_Transformations
         {
             // delays by 2 to 5 seconds
             await Task.Delay(RandomHelper.Randomizer.Next(2000,5000));
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f,0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f, 0.1f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0f, 0f, 0f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0f, 0f,0));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.1f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.2f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.3f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.4f, 0.5f));
-            await Task.Delay(50);
-            b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.5f, 0.5f));
-            b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f,  0.5f, 0.5f));
+            
+            DoBlink(DateTime.Now,TimeSpan.FromSeconds(0.5));
+
             Blink();
         }
 
+        /// <summary> The refreshrate of the blink steps in milli seconds.</summary>
+        const int BLINK_REFRES_RATE = 1;
+
+        /// <summary> Executes the animation for the blink</summary>
+        /// <param name="startTime"> The time the animation was started at.</param>
+        /// <param name="duration"> The length of the animation.</param>
+        private async Task DoBlink(DateTime startTime,TimeSpan duration)
+        {
+            DateTime endTime = startTime + duration;
+
+            if (DateTime.Now < endTime)
+            {
+                TimeSpan ellapsedTime = DateTime.Now - startTime;
+
+                float progress = (float)(ellapsedTime.TotalSeconds / duration.TotalSeconds);
+
+
+
+                float eyeScale = 0.5f * (float)(Math.Sin(progress * Math.PI + Math.PI) + 1);
+                b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f, eyeScale, 0.5f));
+                b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f, eyeScale, 0.5f));
+
+                await Task.Delay(BLINK_REFRES_RATE);
+                DoBlink(startTime, duration);
+            }
+            else
+            {
+                //restore values to their original scale
+                b_rightEye.SetLocalScaling(Matrix.CreateScale(0.5f, 0.5f, 0.5f));
+                b_leftEye.SetLocalScaling(Matrix.CreateScale(0.5f, 0.5f, 0.5f));
+            }
+        }
         
         public enum Bones
         {
