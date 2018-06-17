@@ -67,7 +67,7 @@ namespace Opdracht6_Transformations
             LocalRotation = localRotation ?? Matrix.Identity;
             LocalScaling = localScaling ?? Matrix.Identity;
 
-            _transformableObject.SetTransform(WorldTransform);
+            _transformableObject.SetTransform(LocalScaling * WorldTransform);
         }
 
         #endregion
