@@ -255,15 +255,16 @@ namespace Opdracht6_Transformations
             
             mich.RightArm.SetLocalRotation(Matrix.CreateFromYawPitchRoll(0, (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds), MathHelper.ToRadians(60)));
             mich.RightElbow.SetLocalRotation(Matrix.CreateFromYawPitchRoll((MathHelper.ToRadians(45) - (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds) / 2), (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds) / 4,0));
-            
-
-            mich.LeftLeg.SetLocalRotation(Matrix.CreateRotationX((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));
-            mich.RightLeg.SetLocalRotation(Matrix.CreateRotationX(-(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));
 
             //wave to the viewer :D
             mich.LeftArm.SetLocalRotation(Matrix.CreateRotationZ(MathHelper.ToRadians(10) + ((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)) / 16));
-            mich.LeftElbow.SetLocalRotation(Matrix.CreateRotationZ(MathHelper.ToRadians(40) + ((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds))/8));
+            mich.LeftElbow.SetLocalRotation(Matrix.CreateRotationZ(MathHelper.ToRadians(40) + ((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)) / 8));
             mich.LeftHand.SetLocalRotation(Matrix.CreateRotationZ(((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)) / 2));
+
+            // walk a bit
+            mich.LeftLeg.SetLocalRotation(Matrix.CreateRotationX((float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));
+            mich.RightLeg.SetLocalRotation(Matrix.CreateRotationX(-(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)));
+                        
 
             //extra feet rotation
             mich.LeftAnkle.SetLocalRotation(Matrix.CreateRotationX((-(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds)) / 8));
@@ -271,8 +272,8 @@ namespace Opdracht6_Transformations
 
 
             //wiggle the body a bit
-            mich.Origin.SetLocalRotation(Matrix.CreateRotationX(((float)Math.Sin((gameTime.TotalGameTime.TotalSeconds - Math.PI/2) *2)) / 16));
-            mich.Origin.SetLocalRotation(Matrix.CreateRotationZ((-(float)Math.Sin((gameTime.TotalGameTime.TotalSeconds - Math.PI / 2))) / 16));
+            mich.LowerBody.SetLocalRotation(Matrix.CreateRotationX(((float)Math.Sin((gameTime.TotalGameTime.TotalSeconds - Math.PI/2) *2)) / 16));
+            mich.LowerBody.SetLocalRotation(Matrix.CreateRotationZ((-(float)Math.Sin((gameTime.TotalGameTime.TotalSeconds - Math.PI / 2))) / 16));
 
 
             base.Update(gameTime);
