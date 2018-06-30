@@ -21,9 +21,8 @@ namespace Opdracht3_Steering
 
 
         public SpaceShip(string assetName, Vector2 position, float scale, float maxSteering, float maxSpeed, float arrivingRadius, float mass)
-            : base(assetName, 1, "spaceship")
+            : base(assetName, 2, "spaceship")
         {
-            layer = 2;
             this.position = position;
             velocity = Vector2.Zero;
             this.mass = mass;
